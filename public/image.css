@@ -1,0 +1,11 @@
+.header1 {
+        background-image: url("https://wallpaperscave.com/images/thumbs/wp-preview/800x500/18/08-09/games-paladins-74373.jpg");
+		background-position: 0px -150px;
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 300px;
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		backdrop-filter: blur(10px); 
+}

@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Home from './Home';
+import DetailsPage from './DetailsPage';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+const axios = require("axios");
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = function () {
+	const [count, setCount] = useState([]);
+	
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+	const apiCall = async () => {
+		const username = document.getElementById("search").value;
+		const URL = `https://api.paladins.guru/v3/search?term=${username}&type=Player`;
+		const { data } = await axios.default.get(URL);
+		console.log(data);
+		setCount(data);
+	}
+
+	return (
+		<div>
+			<BrowserRouter>
+				<Switch>
+					<Route path="/" exact render={props => (<Home apiCall={apiCall} count={count}/>)} />  
+					<Route 
+						exact
+						path="/player/:id"
+						render={props => <DetailsPage {...props} />} 
+					/>
+				</Switch>
+      		</BrowserRouter>
+		</div>
+	);
+};
+
+ReactDOM.render(<App/>, document.querySelector('#root'));
+
+
